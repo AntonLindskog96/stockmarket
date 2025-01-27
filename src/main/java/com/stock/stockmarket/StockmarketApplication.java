@@ -6,14 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class StockmarketApplication {
-
 	public static void main(String[] args) {
-		StockService stockService = new StockService();
-		try {
-			double applePrice = stockService.getStockPrice("AAPL");
-			System.out.println("APPLE " + applePrice);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		SpringApplication.run(StockmarketApplication.class, args);
 	}
 }

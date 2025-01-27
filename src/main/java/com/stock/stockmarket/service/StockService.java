@@ -42,4 +42,18 @@ private final ObjectMapper objectMapper;
         StockQuote stockQuote = objectMapper.readValue(response.body(), StockQuote.class);
         return stockQuote.getC();
     }
+    public StockQuote getStockDetails(String symbol) throws Exception {
+        String url = BASE_URL + "quote?symbol=" + symbol + "&token=" + API_KEY;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("Failed to fetch stock details: " + response.body());
+        }
+        return objectMapper.readValue(response.body(), StockQuote.class);
+    }
 }
