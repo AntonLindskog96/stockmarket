@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {
@@ -21,7 +23,8 @@ public class StockController {
 
     private final StockService stockService;
 
-    // En REST-kontroller som hanterar förfrågningar för att få priset på en aktie baserat på dess symbol.
+    // En REST-kontroller som hanterar förfrågningar för att få priset på en aktie baserat på symbol.
+    // api/stocks/SPOT/details
     @GetMapping("/{symbol}/price")
     public ResponseEntity<Double> getStockPrice(@PathVariable String symbol) {
         try {
@@ -31,7 +34,7 @@ public class StockController {
             return ResponseEntity.status(500).body(null);
         }
     }
-
+    // Tar fram detaljer från Stockquote
     @GetMapping("/{symbol}/details")
     public ResponseEntity<StockQuote> getStockDetails(@PathVariable String symbol) {
         try {
@@ -39,6 +42,16 @@ public class StockController {
             return ResponseEntity.ok(stockQuote);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
+        }
+    }
+    @GetMapping("/topstocks")
+    public List<StockQuote> getTopStocks() {
+        try {
+            return stockService.getTopStocks();  // Get the top 10 stocks' data
+        } catch (Exception e) {
+            // Handle exceptions (like API issues, etc.)
+            System.out.println("Error fetching stocks: " + e.getMessage());
+            return null;
         }
     }
 }

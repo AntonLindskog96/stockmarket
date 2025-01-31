@@ -1,6 +1,7 @@
 package com.stock.stockmarket.model;
 
 public class StockQuote {
+    private StockSymbol stockSymbol;
     private double c; // current price
     private double h; // highest price today
     private double l; // lowest price today
@@ -9,6 +10,15 @@ public class StockQuote {
     private double d; // Price change since previous close
     private double dp; // Procentchange since previous close
     private double t; // Unix timestamp
+
+
+    public StockSymbol getStockSymbol() {
+        return stockSymbol;
+    }
+
+    public void setStockSymbol(StockSymbol stockSymbol) {
+        this.stockSymbol = stockSymbol;
+    }
 
     public double getT() {
         return t;
