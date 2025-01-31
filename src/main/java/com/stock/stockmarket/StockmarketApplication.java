@@ -1,21 +1,32 @@
 package com.stock.stockmarket;
 
+import com.stock.stockmarket.model.MyPortfolio;
 import com.stock.stockmarket.model.StockQuote;
 import com.stock.stockmarket.model.StockSymbol;
 import com.stock.stockmarket.service.StockService;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.stock.stockmarket.model.StockInPortfolio;
+
 
 import java.util.List;
 import java.util.Scanner;
 
+@EnableAutoConfiguration
 @SpringBootApplication
+
 public class StockmarketApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StockmarketApplication.class, args);
 		System.out.println("Market opening...");
 		Scanner scanner = new Scanner(System.in);
 		StockService stockService = new StockService();
+		MyPortfolio portfolio = new MyPortfolio();
+
+		//add applestock to portfolio to test
+		portfolio.addStock(new StockInPortfolio("AAPL", 10)); // Lägg till 10 Apple-aktier till priset 150
+
 		while (true) {
 			System.out.println("välj ett alternativ");
 			System.out.println("1. Se dina aktier");
@@ -45,12 +56,22 @@ public class StockmarketApplication {
 							}
 						}
 					} catch (Exception e) {
-						System.out.println("Error fetching top stocks: " + e.getMessage());
+						System.out.println("Error fetching stocks: " + e.getMessage());
+					}
+					break;
+				case 2:
+					try {
+						// Beräkna portföljens totala värde
+						double totalValue = portfolio.getTotalPortfolioValue(stockService.getTopStocks());
+						System.out.println("Total Portfolio Value: " + totalValue);
+					} catch (Exception e) {
+						System.out.println("Error calculating total portfolio value: " + e.getMessage());
 					}
 					break;
 
+
 				default:
-					System.out.println("Ogiltigt val. Försök igen.");
+					System.out.println("Try again, wrong input.");
 			}
 
 

@@ -11,7 +11,6 @@ public class StockQuote {
     private double dp; // Procentchange since previous close
     private double t; // Unix timestamp
 
-
     public StockSymbol getStockSymbol() {
         return stockSymbol;
     }

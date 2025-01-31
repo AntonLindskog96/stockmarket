@@ -9,9 +9,13 @@ public class StockSymbol {
     private String type;
     private String currency;
 
-    // Default constructor (required by Jackson)
-    public StockSymbol() {
+    public StockSymbol(String symbol, String description, String type) {
+        this.symbol = symbol;
+        this.description = description;
+        this.currency = currency;
+        this.type = type;
     }
+
 
     // Getters and Setters for each field
     public String getSymbol() {
